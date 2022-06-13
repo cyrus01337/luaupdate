@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """
 CLI Luau installer and updater
-
-TODO: ensure all extracted files from zip are executable
-TODO: compilation for unsupported OSes
-TODO: types
-TODO: create install script that adds it to path
 """
 import argparse
 import json
