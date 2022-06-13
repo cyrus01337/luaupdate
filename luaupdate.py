@@ -2,6 +2,7 @@
 """
 CLI Luau installer and updater
 
+TODO: compilation for unsupported OSes
 TODO: types
 TODO: create install script that adds it to path
 """
