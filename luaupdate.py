@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 CLI Luau installer and updater
+
+TODO: types
+TODO: create install script that adds it to path
 """
 import argparse
 import json
@@ -160,7 +163,9 @@ def main():
 
     with zipfile.ZipFile(asset, "r") as zip_fh:
         for name in zip_fh.namelist():
-            print(name)
+            path = directory / name
+
+            with path.open("wb")
         # zip_fh.extractall(directory)
 
     if is_zipball:
@@ -169,7 +174,6 @@ def main():
     set_cache_settings(settings, version=latest_version)
 
     return 0
-
 
 
 if __name__ == "__main__":
