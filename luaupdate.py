@@ -2,6 +2,7 @@
 """
 CLI Luau installer and updater
 
+TODO: ensure all extracted files from zip are executable
 TODO: compilation for unsupported OSes
 TODO: types
 TODO: create install script that adds it to path
@@ -30,12 +31,6 @@ def set_ownership_of(path):
     sudo_user = os.environ.get("SUDO_USER", os.environ["USER"])
 
     shutil.chown(full_path, sudo_user)
-
-
-def set_as_executable(path):
-    path_stat = path.stat()
-
-    path.chmod(path_stat.st_mode | stat.S_IXOTH | stat.S_IXGRP | stat.S_IXOTH)
 
 
 def get_cache_settings():
@@ -145,6 +140,12 @@ def get_installation_directory():
     return bin
 
 
+def set_as_executable(path):
+    path_stat = path.stat()
+
+    path.chmod(path_stat.st_mode | stat.S_IXOTH | stat.S_IXGRP | stat.S_IXOTH | stat.S_IEXEC)
+
+
 def compile_from_source(destination):
     pass
 
@@ -165,9 +166,15 @@ def main():
     with zipfile.ZipFile(asset, "r") as zip_fh:
         for name in zip_fh.namelist():
             path = directory / name
+            content = zip_fh.read(name)
 
-            with path.open("wb")
-        # zip_fh.extractall(directory)
+            with path.open("wb") as fh:
+                fh.write(content)
+
+            path_stat = path.stat()
+
+            set_as_executable(path)
+        # zip_fh.extractall(directory)  # original
 
     if is_zipball:
         compile_from_source(directory)
